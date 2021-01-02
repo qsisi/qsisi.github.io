@@ -134,9 +134,50 @@ end_header
 <p><code>element</code>关键字后面跟的是元素类型和个数，这里是 5个顶点；元素除了顶点（vertex）外还有面片（face）；</p>
 </li>
 <li>
-<p><code>property</code>关键字后面跟的是这个元素（element）的数据类型，此处表示每个点（用一行表示）后跟着6 个数据。</p>
+<p><code>property</code>关键字后面跟的是这个元素（element）的数据类型，此处表示每个点（用一行表示）后跟着6个数据。</p>
 </li>
 </ul>
+<p>PS：这里复习一些基本数据类型</p>
+<p><img alt="Screenshot" src="../img/1.png" /></p>
+<p>EXAMPLE-2.ply</p>
+<pre><code>ply
+format binary_little_endian 1.0
+comment abc.png
+element vertex 300
+property float32 x
+property float32 y
+property float32 z
+element face 600
+property list uint8 uint32 vertex_indices
+property list uint8 float32 texcoord
+end_header
+
+</code></pre>
+<p>解读：</p>
+<ul>
+<li><code>comment</code>后跟着的是注释信息，带贴图的 ply文件需要将贴图文件名放在注释信息后，除此之外 comment后还可以跟一些作者、版本等信息；</li>
+<li><code>face</code>后的 property有两行，第一行定义了 face的顶点列表，第二行定义了 face对应贴图的坐标列表；</li>
+</ul>
+<p><code>list uint8uint32 vertex_indices</code></p>
+<p>list表示后面跟着的是个列表，vertex_indices 指的是这是个顶点列表，本行用一个 uint8的数字打头，指出列表中的元素个数（对于面片来说一般大于三），然后 unint32表示的是列表中数据的类型，也就是用 32位无符号整形表示此面片顶点对应的 vertex元素的编号（按顺序从小到大）。</p>
+<p><code>list uint8float32 texcoord</code></p>
+<p>list表示后面跟着的是个列表，texcoord指的是这是个纹理坐标列表，同样用一个 uint8的数字打头，指出列表中的元素个数（uv坐标就是2），然后float32表示的是列表中数据的类型，也就是用 32位 float表示纹理坐标值。</p>
+<h2 id="intel-realsenseply">Intel RealSense导出的PLY格式</h2>
+<pre><code>ply
+format binary_little_endian 1.0
+comment pointcloud saved from Realsense Viewer
+element vertex 249208
+property float32 x
+property float32 y
+property float32 z
+property uchar red
+property uchar green
+property uchar blue
+element face 463878
+property list uchar int vertex_indices
+end_header
+
+</code></pre>
 <h2 id="commands">Commands</h2>
 <ul>
 <li><code>mkdocs new [dir-name]</code> - Create a new project.</li>
